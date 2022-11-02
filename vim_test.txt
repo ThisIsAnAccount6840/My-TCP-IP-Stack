@@ -1,0 +1,19 @@
+how to use Vim?
+mode1: command mode (default when firstly enter a file)
+mode2: insert text mode
+mode3: bottom command mode (could support more commands)
+ways to switch modes:
+"i": mode1->mode2
+"esc": mode2->mode1
+":": mode1->mode3
+"enter": mode3->mode1
+when in mode1:
+"wq":exit
+when in mode3:
+"q": exit
+"w": save file
+
+how to save file and exit quickly when in mode2?
+esc+:wq
+
+ 
