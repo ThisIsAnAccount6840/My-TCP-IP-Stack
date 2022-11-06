@@ -1,4 +1,5 @@
 #include "gluethread/glthread.h"
+#include"net.h"
 #include<cassert>
 #include<cstring>
 #include<cstddef>
@@ -18,6 +19,7 @@ class interface_t {
 	 	char if_name[IF_NAME_SIZE]; //Name of the interface
 		node_t* att_node; //The node that the interface is attached to
 		link_t* link; //The link of the interface
+		intf_nw_prop_t intf_nw_prop;//The network property of an interface--encapsuled in a class.
 };
 
 class link_t{
@@ -34,6 +36,7 @@ class node_t{
 		char node_name[NODE_NAME_SIZE];
 		interface_t* intf[MAX_INTF_PER_NODE];//All the slots that a node has. When an element is null in this array, it means that no interface is plugged into this slot.
 		glthread_t graph_glue;
+		node_nw_prop_t node_nw_prop;//The network property of a node--encapsuled in a class.
 };
 GLTHREAD_TO_STRUCT(graph_glue_to_node, node_t, graph_glue);//?
 
@@ -72,7 +75,7 @@ static inline int get_node_available_slot(node_t* node)
 	return -1;
 }
 
-static inline interface_t* get_node_if_by_name(node_t* node, char* if_name)
+static inline interface_t* get_node_if_by_name(node_t* node, const char* if_name)
 {
 	int i;
 	for(i=0;i<MAX_INTF_PER_NODE && node->intf[i];i++)
@@ -82,7 +85,7 @@ static inline interface_t* get_node_if_by_name(node_t* node, char* if_name)
 	return NULL;
 }
 
-static inline node_t* get_node_by_node_name(graph_t* topo, char* node_name)
+static inline node_t* get_node_by_node_name(graph_t* topo, const char* node_name)
 {
 	node_t* node;
 	glthread_t* curr;

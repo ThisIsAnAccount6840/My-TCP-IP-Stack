@@ -3,8 +3,10 @@ CFLAGS=-g
 TARGET:test.exe
 
 OBJS=gluethread/glthread.o \
-                  graph.o                  \
-                  topology.o
+                  graph.o \
+                  topology.o \
+		  net.o
+
 
 test.exe:testapp.o ${OBJS}
 	${CC} ${CFLAGS} testapp.o ${OBJS} -o test.exe
@@ -18,6 +20,8 @@ graph.o:graph.cpp
 	${CC} ${CFLAGS} -c -I . graph.cpp -o graph.o
 topology.o:topology.cpp
 	${CC} ${CFLAGS} -c -I . topology.cpp -o topology.o
+net.o:net.cpp
+	${CC} ${CFLAGS} -c -I . net.cpp -o net.o
 
 clean:
 	rm *.o

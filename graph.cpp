@@ -23,6 +23,8 @@ node_t* create_graph_node(graph_t* graph, const char* node_name)
 
 	init_glthread(&node->graph_glue);//?
 	glthread_add_next(&graph->node_list, &node->graph_glue);//?
+	
+	init_node_nw_prop(&node->node_nw_prop);
 
 	return node;
 }
@@ -32,16 +34,21 @@ void insert_link_between_two_nodes
 {
 	//Create a link
 	link_t* link=new link_t;
-
+	
+	//Initialize interface1
 	strncpy(link->intf1.if_name,from_if_name,IF_NAME_SIZE);
 	link->intf1.if_name[IF_NAME_SIZE-1]='\0';
 	link->intf1.att_node=node1;
 	link->intf1.link=link;
-
+	init_intf_nw_prop(&(link->intf1.intf_nw_prop));
+	interface_assign_mac_address(&link->intf1);
+	//Initialize interface2
 	strncpy(link->intf2.if_name,to_if_name,IF_NAME_SIZE);
         link->intf2.if_name[IF_NAME_SIZE-1]='\0';
 	link->intf2.att_node=node2;
         link->intf2.link=link;
+        init_intf_nw_prop(&(link->intf2.intf_nw_prop));
+        interface_assign_mac_address(&link->intf2);
 
 	link->cost=cost;
 
@@ -61,7 +68,6 @@ void dump_graph(graph_t *graph){
     node_t *node;
     
     cout<<"Topology Name: "<<graph->topology_name<<endl;
-   // printf("Topology Name = %s\n", graph->topology_name);
 
     ITERATE_GLTHREAD_BEGIN(&graph->node_list, curr){
 
@@ -76,7 +82,7 @@ void dump_node(node_t *node){
     interface_t *intf;
 
     cout<<"Node Name: "<<node->node_name<<endl;
-    //printf("Node Name = %s : \n", node->node_name);
+
     for( ; i < MAX_INTF_PER_NODE; i++){
         
         intf = node->intf[i];
@@ -90,8 +96,5 @@ void dump_interface(interface_t *interface){
    link_t *link = interface->link;
    node_t *nbr_node = get_nbr_node(interface);
 
-   cout<<"Local Node: "<<interface->att_node->node_name<<" "<<"Interface Name: "<<interface->if_name<<" "<<"Nber Node: "<<nbr_node->node_name<<" "<<"Cost: "<<link->cost<<endl;
-  /* printf(" Local Node : %s, Interface Name = %s, Nbr Node %s, cost = %u\n", 
-            interface->att_node->node_name, 
-            interface->if_name, nbr_node->node_name, link->cost); */
+   cout<<"Local Node: "<<interface->att_node->node_name<<", "<<"Interface Name: "<<interface->if_name<<", "<<"Nber Node: "<<nbr_node->node_name<<", "<<"Cost: "<<link->cost<<endl;
 }
