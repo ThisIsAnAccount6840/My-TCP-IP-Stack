@@ -56,11 +56,14 @@ void interface_assign_mac_address(interface_t *interface);
 #define NODE_IP_ADDR(node_ptr)        (((node_ptr)->node_nw_prop).ip_addr.ip_addr)
 #define IS_INTF_L3_MODE(intf_ptr)	((intf_ptr)->intf_nw_prop.is_ip_addr_config)
 
-
 // APIs to set network node properties
 bool node_set_ip_address(node_t *node, const char *ip_addr);
 bool node_set_intf_ip_address(node_t *node, const char *if_name, const char *ip_add, int mask);
 bool node_unset_intf_ip_address(node_t *node, const char *if_name);
+
+interface_t * node_get_matching_subnet_interface(node_t*,const char*);
+unsigned int convert_ip_from_str_to_int(const char*);
+void convert_ip_from_int_to_str(unsigned int, char*);
 
 //Dumping Functions to dump network information on nodes and interfaces
 void dump_nw_graph(graph_t *graph);

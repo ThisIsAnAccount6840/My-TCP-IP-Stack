@@ -1,4 +1,5 @@
 #include"graph.h"
+
 using namespace std;
 
 graph_t* build_first_topo()
