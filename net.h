@@ -9,7 +9,7 @@ class graph_t;
 class ip_add_t
 {
 	public:
-		char ip_addr[16];//Format: A.B.C.D
+		char ip_addr[16];//Format: A.B.C.D, eg. 122.1.1.1
 };
 
 class mac_add_t

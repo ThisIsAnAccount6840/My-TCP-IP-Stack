@@ -41,7 +41,8 @@ bool node_unset_intf_ip_address(node_t *node, const char *if_name)
 	assert(if_name);
 
         interface_t *intf=get_node_if_by_name(node,if_name);
-        if(!intf) assert(0);
+        //if(!intf) assert(0);
+		assert(intf);
 
         intf->intf_nw_prop.is_ip_addr_config=false;
         memset(IF_IP(intf),0,16);

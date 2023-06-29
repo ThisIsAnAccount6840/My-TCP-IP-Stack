@@ -1,11 +1,15 @@
 #include"graph.h"
 #include"utils.h"
+#include "CommandParser/libcli.h"
 
 extern graph_t* build_first_topo();
+extern void nw_init_cli();
 
-int main()
-{
-	graph_t* topo=build_first_topo();
+graph_t* topo=NULL;
+
+int main(int argc, char* *argv){
+	nw_init_cli();
+	topo=build_first_topo();
 	dump_graph(topo);
 	dump_nw_graph(topo);
 	char str_prefix[16];
@@ -22,5 +26,7 @@ int main()
 	convert_ip_from_int_to_str(2046886144,ip);
 	cout<<"Testing convert int->ip: "<<ip<<endl;
 	cout<<"Testing function 'apply_mask: '"<<str_prefix<<endl;
+
+	start_shell();
 	return 0;
 }
