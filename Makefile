@@ -1,16 +1,16 @@
 CC=g++
 CFLAGS=-g
-TARGET:test.exe CommandParser/libcli.a
-LIBS=-lpthread -L ./CommandParser -lcli
+TARGET:test.exe
+LIBS=-lpthread
 OBJS=gluethread/glthread.o \
                   graph.o \
                   topology.o \
 		  net.o	\
-		  nwcli.o \
-		  utils.o
+		  utils.o \
+		  comm.o
 
 
-test.exe:testapp.o ${OBJS} CommandParser/libcli.a
+test.exe:testapp.o ${OBJS} 
 	${CC} ${CFLAGS} testapp.o ${OBJS} -o test.exe ${LIBS}
 
 testapp.o:testapp.cpp
@@ -27,21 +27,16 @@ topology.o:topology.cpp
 
 net.o:net.cpp
 	${CC} ${CFLAGS} -c -I . net.cpp -o net.o
-
-nwcli.o:nwcli.cpp
-	${CC} ${CFLAGS} -c -I . nwcli.cpp  -o nwcli.o
 	
 utils.o:utils.cpp
 	${CC} ${CFLAGS} -c -I . utils.cpp -o utils.o
 
-CommandParser/libcli.a:
-	(cd CommandParser; make)
+comm.o:comm.cpp
+	${CC} ${CFLAGS} -c -I . comm.cpp -o comm.o
 
 clean:
-	(cd CommandParser;  make clean)
 	rm *.o
 	rm gluethread/glthread.o
 	rm *exe
 all:
 	make
-	(cd CommandParser; make)

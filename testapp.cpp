@@ -1,5 +1,6 @@
-#include"graph.h"
+//#include"graph.h"
 #include"utils.h"
+#include "comm.h"
 #include "CommandParser/libcli.h"
 
 extern graph_t* build_first_topo();
@@ -8,7 +9,7 @@ extern void nw_init_cli();
 graph_t* topo=NULL;
 
 int main(int argc, char* *argv){
-	nw_init_cli();
+	//nw_init_cli();
 	topo=build_first_topo();
 	dump_graph(topo);
 	dump_nw_graph(topo);
@@ -27,6 +28,13 @@ int main(int argc, char* *argv){
 	cout<<"Testing convert int->ip: "<<ip<<endl;
 	cout<<"Testing function 'apply_mask: '"<<str_prefix<<endl;
 
-	start_shell();
+	sleep(2);
+	cout<<"===Testing Packet Transmission==="<<endl;
+	node_t *sending_node=get_node_by_node_name(topo,"R0_re");
+	interface_t *send_itf=get_node_if_by_name(sending_node, "eth0/0");
+	char msg[]="hello world!";
+	send_pkt_out(msg, sizeof(msg)/sizeof(char), send_itf); //经常失败
+
+	//start_shell();
 	return 0;
 }
