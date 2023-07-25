@@ -1,4 +1,5 @@
 #include<memory.h>
+#include "utils.h"
 
 //Forward declarations
 class node_t;
@@ -18,17 +19,27 @@ class mac_add_t
 		char mac[8];
 };
 
+//Forward Declaration
+class arp_table_t;
+
 class node_nw_prop_t
 {
 	public:
 		bool is_ip_addr_config;// '1':IP address of this node is configured
 		ip_add_t ip_addr;//IP address of this node
+
+		//L2 Properties
+		arp_table_t *arp_table;
 };
+
+extern void init_arp_table(arp_table_t **arp_table);
 
 static inline void init_node_nw_prop(node_nw_prop_t *node_nw_prop)
 {
 	node_nw_prop->is_ip_addr_config=false;
 	memset(node_nw_prop->ip_addr.ip_addr, 0, 16);
+
+	init_arp_table(&(node_nw_prop->arp_table));
 }
 
 class intf_nw_prop_t
@@ -70,4 +81,5 @@ void dump_nw_graph(graph_t *graph);
 void dump_node_nw_prop(node_t *node);
 void dump_intf_prop(interface_t *interface);
 
-
+// Shift buffer function
+char * pkt_buffer_shift_right(char *pkt, unsigned int pkt_size, unsigned int total_buffer_size);

@@ -33,8 +33,6 @@ void layer2_fill_with_broadcast_mac(char* mac_array)
 	}
 }
 
-
-
 /*unsigned int covert_ip_from_str_to_int(char*ip_addr)
 {
 	int ip_int[4];

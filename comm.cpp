@@ -38,10 +38,18 @@ void init_udp_socket(node_t *node){
     node->udp_socket_fd=udp_socket_fd;//assign the socket file descriptor to the node
 }
 
+extern void L2_frame_recv(node_t *, interface_t *, char *, unsigned int);
+
 int pkt_receive(node_t *node, interface_t *interface, char *pkt, unsigned int pkt_size){
-    // Entry point into data-link layer from physical layer
+    
     cout<<"Packet Received: "<<pkt<<endl;
     cout<<"Receiving Node: "<<node->node_name<<" "<<"on Interface: "<<interface->if_name<<endl;
+
+    //Buffer shift
+    pkt=pkt_buffer_shift_right(pkt, pkt_size, MAX_PACKET_BUFFER_SIZE-IF_NAME_SIZE);
+
+    // Entry point into data-link layer from physical layer
+    L2_frame_recv(node, interface, pkt, pkt_size);
 }
 
 static void _pkt_receive(node_t *receving_node,  char *pkt_with_aux_data, unsigned int pkt_size){

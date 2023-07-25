@@ -4,12 +4,15 @@
 #include "CommandParser/libcli.h"
 
 extern graph_t* build_first_topo();
+extern graph_t *build_linear_topo();
 extern void nw_init_cli();
 
 graph_t* topo=NULL;
 
 int main(int argc, char* *argv){
 	//nw_init_cli();
+
+	/* PART A
 	topo=build_first_topo();
 	dump_graph(topo);
 	dump_nw_graph(topo);
@@ -34,6 +37,13 @@ int main(int argc, char* *argv){
 	interface_t *send_itf=get_node_if_by_name(sending_node, "eth0/0");
 	char msg[]="hello world!";
 	send_pkt_out(msg, sizeof(msg)/sizeof(char), send_itf); //经常失败
+
+	*/
+ 
+	//PART B
+	topo=build_linear_topo();
+	dump_graph(topo);
+	dump_nw_graph(topo);
 
 	//start_shell();
 	return 0;

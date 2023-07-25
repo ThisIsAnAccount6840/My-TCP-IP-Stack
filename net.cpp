@@ -189,4 +189,6 @@ void dump_intf_prop(interface_t *interface)
 	cout<<'\t'<<"MAC Address: "<<IF_MAC(interface)[0]<<":"<<IF_MAC(interface)[1]<<":"<<IF_MAC(interface)[2]<<":"<<IF_MAC(interface)[3]<<":"<<IF_MAC(interface)[4]<<":"<<IF_MAC(interface)[5]<<endl;
 }
 
+char * pkt_buffer_shift_right(char *pkt, unsigned int pkt_size, unsigned int total_buffer_size){
 
+}
